@@ -1,0 +1,116 @@
+* {
+    text-decoration: none;
+    margin: 0px;
+    padding: 0px;
+
+}
+
+nav {
+    background-image: linear-gradient(45deg, #9FC771, #fff, #9FC771);
+
+}
+
+footer {
+
+    background-image: linear-gradient(45deg, #9FC771, #fff, #9FC771);
+
+}
+
+
+
+.nav-link {
+    font-size: 20px;
+    margin: 3px;
+    font-weight: bold;
+    text-align: center;
+
+}
+
+.navbar-brand img {
+    height: 80px;
+    width: auto;
+
+}
+
+
+.dropdown-item {
+    background-color: #9FC771;
+}
+
+.dropdown-menu {
+    padding: 0;
+    
+}
+
+#navbarNavDropdown {
+    align-items: center;
+    justify-content: left;
+    margin-left: 10px;
+}
+
+.img-index {
+    max-width: 100%;
+    height: auto;
+
+}
+
+.text-body-index-center {
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+.text-quienessomos-center {
+
+    text-align: center;
+
+
+}
+
+.container-fluid {
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown-menu li {
+    text-align: center;
+}
+
+.contactus-form .btn-primary {
+    background-color: #9FC771;
+    border: 0;
+    
+
+}
+
+.company-stuff h5 {
+    font-weight: bold;
+}
+
+.card {
+    width:4fr;
+}
+
+
+@media   (min-width: 768px) {
+    .img-index {
+        border-radius: 50%;
+    }
+
+    .img-quienessomos {
+        max-width: 50%;
+    }
+
+    .dropdown-menu li {
+        text-align: left;
+    }
+
+    #navbarNavDropdown {
+        padding-left: 10%;
+    }
+
+    .nav-item {
+        margin-right: 40px;
+    }
+
+}
