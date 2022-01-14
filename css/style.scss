@@ -1,13 +1,15 @@
+$colorFondoFooterNav: linear-gradient(45deg, #9FC771, #fff, #9FC771);
+
 * {
 	text-decoration: none;
 	margin: 0px;
 	padding: 0px;
 }
 nav {
-	background-image: linear-gradient(45deg, #9FC771, #fff, #9FC771);
+	background-image: $colorFondoFooterNav;
 }
 footer {
-	background-image: linear-gradient(45deg, #9FC771, #fff, #9FC771);
+	background-image: $colorFondoFooterNav;
 }
 .nav-link {
 	font-size: 20px;
