@@ -1,4 +1,8 @@
-$colorFondoFooterNav: linear-gradient(45deg, #9FC771, #fff, #9FC771);
+
+$colores: (
+	banners: linear-gradient(45deg, #9FC771, #fff, #9FC771),
+	fondo: #9FC771
+);
 
 * {
 	text-decoration: none;
@@ -6,10 +10,10 @@ $colorFondoFooterNav: linear-gradient(45deg, #9FC771, #fff, #9FC771);
 	padding: 0px;
 }
 nav {
-	background-image: $colorFondoFooterNav;
+	background-image: map-get($colores, banners);
 }
 footer {
-	background-image: $colorFondoFooterNav;
+	background-image: map-get($colores, banners);
 }
 .nav-link {
 	font-size: 20px;
@@ -24,7 +28,7 @@ footer {
 	}
 }
 .dropdown-item {
-	background-color: #9FC771;
+	background-color: map-get($colores, fondo);
 }
 .dropdown-menu {
 	padding: 0;
@@ -54,7 +58,7 @@ footer {
 }
 .contactus-form {
 	.btn-primary {
-		background-color: #9FC771;
+		background-color: map-get($colores, fondo);
 		border: 0;
 	}
 }
