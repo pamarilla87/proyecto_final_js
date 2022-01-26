@@ -1,0 +1,27 @@
+Agregue estas keywords a index.html y actualice la descripción:
+  <meta name="description" content="Pagina principal de Veterinaria San Martin">
+  <meta name="keywords" content="Veterinaria, San Martin, Perros, Gatos, Animal">
+
+Agregue estas keywords a sucursales.html  y actualice la descripción:
+    <meta name="description" content="Sucursales de Veterinaria San Martin">
+    <meta name="keywords" content="Veterinaria, San Martin, Perros, Gatos, Animal, sucursales, oficina, consultorio">
+
+Agregue estas keywords a quienessomos.html  y actualice la descripción:
+    <meta name="description" content="Quienes somos Veterinaria San Martin">
+    <meta name="keywords" content="Veterinaria, San Martin, Perros, Gatos, Equipo, Veterinarios, veterinarias, especialistas">
+
+Agregue estas keywords a especialidades.html  y actualice la descripción:
+    <meta name="description" content="Especialidades de Veterinaria San Martin">
+    <meta name="keywords" content="Veterinaria, San Martin, Perros, Gatos, Animal, Esecialidades, Especialidades veterinarias">
+
+Agregue estas keywords a contacto.html  y actualice la descripción:
+    <meta name="description" content="Cantacto de Veterinaria San Martin">
+    <meta name="keywords" content="Veterinaria, San Martin, Perros, Gatos, Animal, Contacto, Informacion">
+
+Agregue estas keywords a clinica.html  y actualice la descripción:
+    <meta name="description" content="Clinica de Veterinaria San Martin">
+    <meta name="keywords" content="Veterinaria, San Martin, Perros, Gatos, Animal, Clinica, clinica veterinaria, oncologia, homeopatia, diagnostico, cardiologia, oftalmologia, laboratorio, endocrinologia">
+
+Agregue estas keywords a bandadero.html  y actualice la descripción:
+    <meta name="description" content="Bañadero de Veterinaria San Martin">
+    <meta name="keywords" content="Veterinaria, San Martin, Perros, Gatos, Animal, bañadero, animales, ducha, limpieza, lavado">
