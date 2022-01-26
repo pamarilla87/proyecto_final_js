@@ -9,6 +9,11 @@ $colores: (
 	margin: 0px;
 	padding: 0px;
 }
+
+@mixin grids-align-center {
+	align-items: center;
+	justify-content: center;
+}
 nav {
 	background-image: map-get($colores, banners);
 }
@@ -53,8 +58,7 @@ footer {
 	text-align: center;
 }
 .container-fluid {
-	align-items: center;
-	justify-content: center;
+	@include grids-align-center;
 }
 .contactus-form {
 	.btn-primary {
