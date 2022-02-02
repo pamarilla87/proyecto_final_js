@@ -13,10 +13,15 @@ footer {
 }
 
 .nav-link {
-  font-size: 20px;
-  margin: 3px;
+  font-size: 15px;
+  margin-left: 2px;
+  margin-right: 0px;
   font-weight: bold;
   text-align: center;
+}
+
+.navbar-brand {
+  margin-right: 2px;
 }
 
 .navbar-brand img {
@@ -123,14 +128,22 @@ footer {
   .img-quienessomos {
     max-width: 50%;
   }
-  .dropdown-menu li {
-    text-align: left;
+  .nav-item {
+    margin-left: 1rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .nav-link {
+    font-size: 20px;
+    margin: 3px;
+    font-weight: bold;
+    text-align: center;
   }
   #navbarNavDropdown {
-    padding-left: 10%;
-  }
-  .nav-item {
-    margin-right: 40px;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
   }
 }
 /*# sourceMappingURL=style.css.map */
