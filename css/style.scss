@@ -21,6 +21,7 @@ nav {
 
 footer {
 	background-image: map-get($colores, banners);
+	font-size: 15px;
 }
 .nav-link {
 	font-size: 15px;
@@ -122,6 +123,12 @@ footer {
 		font-weight: bold;
 		text-align: center;
 	}
+	
+	footer {
+		font-size: 15px;
+
+	}
+
 
 	#navbarNavDropdown {
 		justify-content: center;
