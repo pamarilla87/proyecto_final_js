@@ -10,7 +10,6 @@ nav {
 
 footer {
   background-image: linear-gradient(45deg, #9FC771, #fff, #9FC771);
-  font-size: 15px;
 }
 
 .nav-link {
@@ -91,6 +90,10 @@ footer {
   width: 4fr;
 }
 
+.footer-titles {
+  font-size: 1.25rem;
+}
+
 .hover-grow {
   display: inline-block;
   vertical-align: middle;
@@ -122,6 +125,14 @@ footer {
   transform: scale(1.1);
 }
 
+.especialidades-lista ul {
+  margin: 0;
+}
+
+.especialidades-lista ul p {
+  text-transform: uppercase;
+}
+
 @media (min-width: 768px) {
   .img-index {
     border-radius: 50%;
@@ -131,6 +142,12 @@ footer {
   }
   .nav-item {
     margin-left: 1rem;
+  }
+  .especialidades-lista ul {
+    margin: 1rem 0 1rem 0;
+  }
+  .especialidades-lista ul p {
+    text-transform: uppercase;
   }
 }
 

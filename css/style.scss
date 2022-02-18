@@ -21,7 +21,6 @@ nav {
 
 footer {
 	background-image: map-get($colores, banners);
-	font-size: 15px;
 }
 .nav-link {
 	font-size: 15px;
@@ -79,6 +78,11 @@ footer {
 .card {
 	width: 4fr;
 }
+
+.footer-titles {
+	font-size: 1.25rem;
+
+}
 .hover-grow {
 	display: inline-block;
 	vertical-align: middle;
@@ -103,6 +107,16 @@ footer {
 	}
 }
 
+.especialidades-lista {
+	ul {
+		margin: 0;
+		p {
+			text-transform:uppercase;
+		}
+	}
+}
+
+
 @media (min-width: 768px) {
 	.img-index {
 		border-radius: 50%;
@@ -112,6 +126,16 @@ footer {
 	}
 	.nav-item {
 		margin-left: 1rem;
+	}
+
+	.especialidades-lista {
+		ul {
+			margin: 1rem 0 1rem 0;
+			
+			p {
+				text-transform:uppercase;
+			}
+		}
 	}
 }
 
@@ -123,15 +147,11 @@ footer {
 		font-weight: bold;
 		text-align: center;
 	}
-	
 	footer {
 		font-size: 15px;
 
 	}
-
-
 	#navbarNavDropdown {
 		justify-content: center;
 	}
-
 }
