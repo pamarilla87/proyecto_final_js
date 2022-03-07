@@ -133,6 +133,13 @@ footer {
   text-transform: uppercase;
 }
 
+.btn-turnos {
+  border: 2px;
+  text-transform: none;
+  text-decoration: none;
+  background-color: #9FC771;
+}
+
 @media (min-width: 768px) {
   .img-index {
     border-radius: 50%;
