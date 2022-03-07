@@ -5,15 +5,48 @@ class Turno {
         this.fecha = fecha;
     }
 
+    pedirNombre() {
+        let nombre = "";
+        while (nombre == "") {
+            nombre = prompt("Por favor ingrese el nombre de su mascota")
+        } 
+        return nombre;
+    }
+
+    pedirEspecialidad(){
+        let especialidad = "";
+        while (!this.esEspecialidadValida(especialidad)) {
+            especialidad = prompt("Por favor ingrese una especialidad: Clinica, Bañadero o Laboratorio").toUpperCase();
+        }
+        return especialidad;
+    }
+
+    esEspecialidadValida(especialidad){
+        let especialidadValida = false
+        const arrayEspecialidad = ["BAÑADERO", "CLINICA", "CLÍNICA", "LABORATORIO"]
+        if (arrayEspecialidad.includes(especialidad)) {
+            especialidadValida = true;
+        }
+        return especialidadValida
+    }
+
+    pedirFecha(){
+        let fecha = prompt("Por favor ingrese la fecha para el turno utilizando el siguiente formato: dd/mm/aaaa. Por ej: 23/12/2022");
+        while (!esFechaValida(fecha)) {
+            fecha = prompt("La fecha es inválida.\n Por favor verifique la fecha y el formato e ingresela nuevamente: dd/mm/aaaa");
+        }
+        return fecha;
+    }
+
 }
 
 function reservarTurno() {
     let nombre = '';
     if (verificarTurno()) {
         const nuevoTurno = new Turno();
-        nuevoTurno.nombre = pedirNombre();
-        nuevoTurno.especialidad = pedirEspecialidad();
-        nuevoTurno.fecha = pedirFecha();
+        nuevoTurno.nombre = nuevoTurno.pedirNombre();
+        nuevoTurno.especialidad = nuevoTurno.pedirEspecialidad();
+        nuevoTurno.fecha = nuevoTurno.pedirFecha();
         if (nuevoTurno.nombre != "" && nuevoTurno.especialidad != "" && nuevoTurno.fecha != "") {
             alert("SU TURNO HA SIDO RESERVADO CON ÉXITO. \n" + "\n Nombre de la mascota: " + nuevoTurno.nombre + "\n Especialidad: " + nuevoTurno.especialidad  + "\n Fecha del turno: " + nuevoTurno.fecha);
         }
@@ -22,38 +55,6 @@ function reservarTurno() {
     }
 }
 
-function pedirFecha(){
-    let fecha = prompt("Por favor ingrese la fecha para el turno utilizando el siguiente formato: dd/mm/aaaa. Por ej: 23/12/2022");
-    while (!esFechaValida(fecha)) {
-        fecha = prompt("La fecha es inválida.\n Por favor verifique la fecha y el formato e ingresela nuevamente: dd/mm/aaaa");
-    }
-    return fecha;
-}
-
-function pedirEspecialidad(){
-    let especialidad = "";
-    while (!esEspecialidadValida(especialidad)) {
-        especialidad = prompt("Por favor ingrese una especialidad: Clinica, Bañadero o Laboratorio").toUpperCase();
-    }
-    return especialidad;
-}
-
-function esEspecialidadValida(especialidad){
-    let especialidadValida = false
-    const arrayEspecialidad = ["BAÑADERO", "CLINICA", "CLÍNICA", "LABORATORIO"]
-    if (arrayEspecialidad.includes(especialidad)) {
-        especialidadValida = true;
-    }
-    return especialidadValida
-}
-
-function pedirNombre() {
-    let nombre = "";
-    while (nombre == "") {
-        nombre = prompt("Por favor ingrese el nombre de su mascota")
-    } 
-    return nombre;
-}
 
 function verificarTurno() {
     let turno = "";
