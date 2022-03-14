@@ -70,20 +70,34 @@
     </nav>
   </header>
   <!-- END OF HEADER -->
+
+  <div class="calendar" id="calendar">
+  </div>
+
+
   <div class="container-fluid ">
     <div class="row text-body-index-center">
-      <div class="col-12 col-md-8 p-5">Contamos con un centro veterinario equipado con la última tecnología, medicamentos, equipos y profesionales para brindar una atención de calidad. Tenemos un gran catálogo de servicios que serán útiles en el tratamiento de cualquier padecimiento de tu mascota, además de productos especializados en ellas. </div>
+      <div class="col-12 col-md-8 p-5">Contamos con un centro veterinario equipado con la última tecnología,
+        medicamentos, equipos y profesionales para brindar una atención de calidad. Tenemos un gran catálogo de
+        servicios que serán útiles en el tratamiento de cualquier padecimiento de tu mascota, además de productos
+        especializados en ellas. </div>
       <div class="col p-3"><img class="img-fluid img-index" src="img/image-presen-1.jpg" alt="vete-1"></div>
     </div>
 
     <div class="row text-body-index-center">
-      <div class="col-12 order-md-2 col-md-8 p-3">La sede Av. Rodríguez Peña 5071, Villa Lynch cuenta con atención clínica e internación las 24 horas del día los 365 días del año, junto con quirófano, farmacia, pet-shop y especialidades. Todo lo que tu mascota necesita, en un solo lugar. También brindamos un completo asesoramiento, accesorios para mascotas y servicio de urgencias para las mismas.</div>
+      <div class="col-12 order-md-2 col-md-8 p-3">La sede Av. Rodríguez Peña 5071, Villa Lynch cuenta con atención
+        clínica e internación las 24 horas del día los 365 días del año, junto con quirófano, farmacia, pet-shop y
+        especialidades. Todo lo que tu mascota necesita, en un solo lugar. También brindamos un completo asesoramiento,
+        accesorios para mascotas y servicio de urgencias para las mismas.</div>
       <div class="col order-md-1 p-3"><img class="img-fluid img-index" src="img/image-presen-0.jpg" alt="vete-0"></div>
 
     </div>
 
     <div class="row text-body-index-center">
-      <div class="col-12 col-md-8 p-3 ">Permite que la Dra. Marina Krappler y su equipo humano se encarguen del cuidado integral de cualquier animal que lleves a sus instalaciones. Ellos sabrán hacerlo de forma correcta. Tenemos como prioridad brindar calidad en todos nuestros servicios y productos, asimismo, brindar un trato personalizado y cordial al público en general</div>
+      <div class="col-12 col-md-8 p-3 ">Permite que la Dra. Marina Krappler y su equipo humano se encarguen del cuidado
+        integral de cualquier animal que lleves a sus instalaciones. Ellos sabrán hacerlo de forma correcta. Tenemos
+        como prioridad brindar calidad en todos nuestros servicios y productos, asimismo, brindar un trato personalizado
+        y cordial al público en general</div>
       <div class="col p-3 "><img class="img-fluid img-index" src="img/image-presen-2.jpg" alt="vete-2"></div>
     </div>
 
@@ -95,11 +109,14 @@
       <div class="row text-center text-md-left">
         <div class="col-12 col-md-4 company-stuff mx-auto mt-3">
           <p class="footer-titles  fw-bold text-uppercase">Veterinaria San Martin</p>
-          <p>Con más de 10 años de trayectoria, Veterinaria San Martin es la clínica veterinaria más grande del país. Con sede central en San Martin, trabajamos constantemente para brindar un servicio de excelencia en todas nuestras sucursales.</p>
+          <p>Con más de 10 años de trayectoria, Veterinaria San Martin es la clínica veterinaria más grande del país.
+            Con sede central en San Martin, trabajamos constantemente para brindar un servicio de excelencia en todas
+            nuestras sucursales.</p>
         </div>
         <div class="col-12 col-md-4 company-stuff mx-auto mt-3">
           <p class="footer-titles  fw-bold text-uppercase">Enlaces útiles</p>
-          <p class="mb-0"><a class="text-reset text-decoration-none" href="pages/especialidades.html">Especialidades</a> </p>
+          <p class="mb-0"><a class="text-reset text-decoration-none" href="pages/especialidades.html">Especialidades</a>
+          </p>
           <p class="mb-0"><a class="text-reset text-decoration-none" href="pages/sucursales.html">Sucursales </a> </p>
         </div>
         <div class="col-12 col-md-4 company-stuff mx-auto mt-3">
@@ -116,7 +133,14 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
-    <script src="js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+  <script src="js/script.js"></script>
+  <script type="text/javascript">
+    let calendar = new Calendar('calendar');
+    calendar.getElement().addEventListener('change', e => {
+      console.log(calendar.value().format('LLL'));
+    });
+  </script>
 </body>
 
 </html>
