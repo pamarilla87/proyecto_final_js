@@ -1,45 +1,3 @@
-class Turno {
-    constructor(nombreApellido, especialidad, fecha) {
-        this.nombreApellido = nombreApellido;
-        this.especialidad = especialidad;
-        this.fecha = fecha;
-    }
-
-    pedirNombre() {
-        let nombre = "";
-        while (nombre == "") {
-            nombre = prompt("Por favor ingrese el nombre de su mascota")
-        }
-        return nombre;
-    }
-
-    pedirEspecialidad() {
-        let especialidad = "";
-        while (!this.esEspecialidadValida(especialidad)) {
-            especialidad = prompt("Por favor ingrese una especialidad: Clinica, Bañadero o Laboratorio").toUpperCase();
-        }
-        return especialidad;
-    }
-
-    esEspecialidadValida(especialidad) {
-        let especialidadValida = false
-        const arrayEspecialidad = ["BAÑADERO", "CLINICA", "CLÍNICA", "LABORATORIO"]
-        if (arrayEspecialidad.includes(especialidad)) {
-            especialidadValida = true;
-        }
-        return especialidadValida
-    }
-
-    pedirFecha() {
-        let fecha = prompt("Por favor ingrese la fecha para el turno utilizando el siguiente formato: dd/mm/aaaa. Por ej: 23/12/2022");
-        while (!esFechaValida(fecha)) {
-            fecha = prompt("La fecha es inválida.\n Por favor verifique la fecha y el formato e ingresela nuevamente: dd/mm/aaaa");
-        }
-        return fecha;
-    }
-
-}
-
 class Calendar {
     constructor(id) {
         this.cells = []
@@ -72,7 +30,7 @@ class Calendar {
         });
     }
 
-    changeMonths(next = true){
+    changeMonths(next = true) {
         if (next) {
             this.currentMonth.add(1, 'month');
         }
@@ -121,8 +79,8 @@ class Calendar {
         for (let i = 0; i < this.cells.length; i++) {
             disabledClass = '';
             if (!this.cells[i].isInCurrentMonth) {
-                disabledClass = 'grid__cell--disable'   
-            } 
+                disabledClass = 'grid__cell--disable'
+            }
             templateCell += `
                 <span class="grid__cell grid__cell--gd ${disabledClass}" data-cell-id="${i}"> ${this.cells[i].date.date()} </span>
             `
@@ -132,14 +90,12 @@ class Calendar {
         this.addEventListenerToCells();
     }
 
-
-
-    addEventListenerToCells(){
+    addEventListenerToCells() {
         let elCells = this.elCalendar.querySelectorAll(".grid__cell--gd");
         elCells.forEach(elCell => {
             elCell.addEventListener('click', e => {
                 let elTarget = e.target;
-                if(elTarget.classList.contains('grid__cell--disable') || elTarget.classList.contains('grid__cell--selected')) {
+                if (elTarget.classList.contains('grid__cell--disable') || elTarget.classList.contains('grid__cell--selected')) {
                     return;
                 }
                 let selectedCell = this.elGridBody.querySelector('.grid__cell--selected');
@@ -150,7 +106,7 @@ class Calendar {
                 this.selectedDate = this.cells[parseInt(elTarget.dataset.cellId)].date;
                 this.elCalendar.dispatchEvent(new Event('change'));
             });
-        }); 
+        });
     }
 
     getElement() {
@@ -192,79 +148,85 @@ class Calendar {
 
 }
 
-function reservarTurno() {
-    let nombre = '';
-    if (verificarTurno()) {
-        const nuevoTurno = new Turno();
-        nuevoTurno.nombre = nuevoTurno.pedirNombre();
-        nuevoTurno.especialidad = nuevoTurno.pedirEspecialidad();
-        nuevoTurno.fecha = nuevoTurno.pedirFecha();
-        if (nuevoTurno.nombre != "" && nuevoTurno.especialidad != "" && nuevoTurno.fecha != "") {
-            alert("SU TURNO HA SIDO RESERVADO CON ÉXITO. \n" + "\n Nombre de la mascota: " + nuevoTurno.nombre + "\n Especialidad: " + nuevoTurno.especialidad + "\n Fecha del turno: " + nuevoTurno.fecha);
+class Turno {
+    constructor(nombreApellido = null, especialidad = null, fecha = null) {
+        this.nombreApellido = nombreApellido;
+        this.especialidad = especialidad;
+        this.fecha = fecha;
+        this.addEventListenerToSpec();
+        
+    }
+
+    setNombre(nombre) {
+        this.nombreApellido = nombre;
+    }
+
+    setEspecialidad(especialidad) {
+        this.especialidad = especialidad;
+    }
+
+    setFecha(fecha) {
+        this.fecha = fecha;
+    }
+
+    addEventListenerToSpec(){
+        let elSpecs = document.querySelectorAll(".seleccion_especialidad");
+        console.log(elSpecs)
+        elSpecs.forEach(elSpecs => {
+            elSpecs.addEventListener('click', e => {
+                let elTarget = e.target;
+                console.log(e.target)
+                if (elTarget.classList.contains('seleccion_especialidad--clinica') || elTarget.classList.contains('seleccion__imagen--clinica') ||
+                elTarget.classList.contains('seleccion_titulo--clinica')) {
+                    this.especialidad = 'CLINICA';	
+                    console.log('entro a clinica')
+                }
+                if (elTarget.classList.contains('seleccion_especialidad--diagnostico') || elTarget.classList.contains('seleccion__imagen--diagnostico') ||
+                elTarget.classList.contains('seleccion_titulo--diagnostico')) {
+                    this.especialidad = 'DIAGNOSTICO';
+                    console.log('entro a diagnosticp')
+	
+                }
+                if (elTarget.classList.contains('seleccion_especialidad--laboratorio') || elTarget.classList.contains('seleccion__imagen--laboratorio') ||
+                elTarget.classList.contains('seleccion_titulo--laboratorio')) {
+                    this.especialidad = 'LABORATORIO';	
+                    console.log('entro a lab')
+
+                }
+            });	
+        });
+    };
+
+}
+
+//TODO: CREAR LAS PÁGINAS DE TURNO DINÁMICAMENTE. NO IR A LA SIGUIENTE PÁGINA SI ALGUN DATO NO ES COMPLETADO DENTRO DE SU PAGINA
+//MOSTRAR INFORMACION DEL TURNO POR PANTALLA. 
+
+
+let calendar = new Calendar('calendar');
+let turno = new Turno()
+
+let menuIndex = 1;
+
+calendar.getElement().addEventListener('change', e => {
+    turno.setFecha(calendar.value().format('LLL'));
+});
+
+
+showMenu(menuIndex);
+
+function turnoMenu(n) {
+    showMenu(menuIndex += n);
+
+}
+
+function showMenu(n) {
+    let menus = document.querySelectorAll(".menu__opciones");
+    let botones = document.querySelectorAll(".menu__boton")
+
+   for (let i = 0; i < menus.length; i++) {
+            menus[i].classList.add('display__none')
         }
-        else
-            alert("Hubo un problema reservando su turno, por favor cargue nuevamente la página y solicitelo de vuelta.")
-    }
+        menus[n - 1].classList.remove('display__none');
+    
 }
-
-
-function verificarTurno() {
-    let turno = "";
-    while ((turno != "SI") && (turno != "NO")) {
-        turno = prompt("Desea reservar un turno? Ingrese SI o NO.").toUpperCase();
-    }
-    if (turno == "SI") {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
-// function esFechaValida(fecha) {
-//     const fechaArray = fecha.split("/");
-//     // console.log(fechaArray);
-//     if ((fechaArray.length != 3)) {
-//         console.log("El formato de fecha es inválido")
-//         return false;
-//     }
-//     else {
-//         dia = parseInt(fechaArray[0]);
-//         mes = parseInt(fechaArray[1]);
-//         anio = parseInt(fechaArray[2]);
-//         return validarFecha(dia, mes, anio)
-//     }
-// }
-
-// function validarFecha(dia, mes, anio) {
-//     let fechaValida = false;
-//     fechaHoy = new Date();
-//     if (new Date(anio, dia, mes).getTime() < fechaHoy.getTime()) {
-//         console.log("La fecha es anterior a hoy");
-//         return fechaValida;
-//     }
-//     if (dia < 1 || dia > 31) {
-//         console.log("El dia no puede ser mayor a 31 o menos a 0");
-//         return fechaValida;
-//     }
-//     if ((mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) && (dia <= 31)) {
-//         fechaValida = true;
-//     }
-//     if ((mes == 4 || mes == 6 || mes == 9 || mes == 11) && (dia <= 30)) {
-//         fechaValida = true;
-//     }
-//     if (esBisiesto(anio) && mes == 2 && dia <= 29) {
-//         fechaValida = true;
-//     }
-//     return fechaValida;
-// }
-
-// function esBisiesto(numeroAnio) {
-//     let bisiesto = false;
-//     if (numeroAnio % 4 == 0) {
-//         if (numeroAnio % 100 != 0 || numeroAnio % 400 == 0) {
-//             bisiesto = true;
-//         }
-//     }
-//     return bisiesto;
-// }
