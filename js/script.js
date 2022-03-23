@@ -205,8 +205,9 @@ class Turno {
 
 let calendar = new Calendar('calendar');
 let turno = new Turno()
-
 let menuIndex = 1;
+const contenedorMenuOpciones = document.getElementById('contenedorMenu');
+
 
 calendar.getElement().addEventListener('change', e => {
     turno.setFecha(calendar.value().format('LLL'));
