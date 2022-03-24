@@ -23,6 +23,7 @@ nav {
 footer {
 	background-image: map-get($colores, banners);
 	height: 30vh;
+	margin-top: 2vh;
 }
 .nav-link {
 	font-size: 15px;
@@ -216,25 +217,34 @@ footer {
 
 }	
 
-.menu__boton--ant{
+#menu__boton--ant{
 	display:flex;
 	justify-content: flex-end;
+	
 
 }
 
-.menu__boton--sig{
+.menu__boton > button {
+	background-color: #9FC771;
+	border: 2px;
+	padding: 10px;
+	border-radius: 5%;
+}
+
+#menu__boton--sig{
 	display:flex;
 	justify-content: flex-start;
+}
+
+.menu__boton--disabled {
+	opacity: 50%;
+	pointer-events: none;
 }
 
 .menu__opcion--titulo {
 	padding-bottom: 10px;
 	padding-top: 10px;
 	text-align: center;
-}
-
-.menu__boton--disabled {
-	cursor:not-allowed;
 }
 
 .menu__opcion--calendario {

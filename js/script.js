@@ -154,7 +154,7 @@ class Turno {
         this.especialidad = especialidad;
         this.fecha = fecha;
         this.addEventListenerToSpec();
-        
+
     }
 
     setNombre(nombre) {
@@ -169,31 +169,30 @@ class Turno {
         this.fecha = fecha;
     }
 
-    addEventListenerToSpec(){
+    addEventListenerToSpec() {
         let elSpecs = document.querySelectorAll(".seleccion_especialidad");
-        console.log(elSpecs)
         elSpecs.forEach(elSpecs => {
             elSpecs.addEventListener('click', e => {
                 let elTarget = e.target;
                 console.log(e.target)
                 if (elTarget.classList.contains('seleccion_especialidad--clinica') || elTarget.classList.contains('seleccion__imagen--clinica') ||
-                elTarget.classList.contains('seleccion_titulo--clinica')) {
-                    this.especialidad = 'CLINICA';	
-                    console.log('entro a clinica')
+                    elTarget.classList.contains('seleccion_titulo--clinica')) {
+                    this.especialidad = 'CLINICA';
+                    console.log("Entro a clinica")
                 }
                 if (elTarget.classList.contains('seleccion_especialidad--diagnostico') || elTarget.classList.contains('seleccion__imagen--diagnostico') ||
-                elTarget.classList.contains('seleccion_titulo--diagnostico')) {
+                    elTarget.classList.contains('seleccion_titulo--diagnostico')) {
                     this.especialidad = 'DIAGNOSTICO';
-                    console.log('entro a diagnosticp')
-	
-                }
-                if (elTarget.classList.contains('seleccion_especialidad--laboratorio') || elTarget.classList.contains('seleccion__imagen--laboratorio') ||
-                elTarget.classList.contains('seleccion_titulo--laboratorio')) {
-                    this.especialidad = 'LABORATORIO';	
-                    console.log('entro a lab')
+                    console.log("Entro a diagnostico")
 
                 }
-            });	
+                if (elTarget.classList.contains('seleccion_especialidad--laboratorio') || elTarget.classList.contains('seleccion__imagen--laboratorio') ||
+                    elTarget.classList.contains('seleccion_titulo--laboratorio')) {
+                    this.especialidad = 'LABORATORIO';
+                    console.log("Entro a Lab")
+
+                }
+            });
         });
     };
 
@@ -203,31 +202,89 @@ class Turno {
 //MOSTRAR INFORMACION DEL TURNO POR PANTALLA. 
 
 
-let calendar = new Calendar('calendar');
-let turno = new Turno()
-let menuIndex = 1;
-const contenedorMenuOpciones = document.getElementById('contenedorMenu');
+// let calendar = new Calendar('calendar');
+// let turno = new Turno()
+// let menuIndex = 1;
+mostrarMenu1();
 
+function mostrarMenu1() {
+    // CREAMOS LOS ELEMENTOS PARENT
+    const contenedorMenuTurnos = document.getElementById("container_MenuTurnos")
+    const menuTurnosTitulo = document.createElement("div")
+    const menuTurnosEspecialidades = document.createElement("div")
+    const rowMenuTurnos = document.createElement("div")
+    const arrEspecialidades = [
+        {id: '0', especialidad: "CLÍNICA", img: "../img/clinica111x106.png", customClass: "seleccion_especialidad--clinica"},
+        {id: '1', especialidad: "LABORATORIO", img: "../img/laboratorio111x106.png", customClass: "seleccion_especialidad--laboratorio"},
+        {id: '2', especialidad: "DIAGNÓSTICO POR IMÁGENES", img: "../img/diagnostico111x106.png", customClass: "seleccion_especialidad--diagnostico"}
+    ]
 
-calendar.getElement().addEventListener('change', e => {
-    turno.setFecha(calendar.value().format('LLL'));
-});
+    //AGREGAMOS CLASES 
+    rowMenuTurnos.className = "row text-center menu__opcion--especialidad"
+    menuTurnosTitulo.className = "col-md-12 menu__opcion--titulo"
 
-
-showMenu(menuIndex);
-
-function turnoMenu(n) {
-    showMenu(menuIndex += n);
-
-}
-
-function showMenu(n) {
-    let menus = document.querySelectorAll(".menu__opciones");
-    let botones = document.querySelectorAll(".menu__boton")
-
-   for (let i = 0; i < menus.length; i++) {
-            menus[i].classList.add('display__none')
-        }
-        menus[n - 1].classList.remove('display__none');
+    //AGREGAMOS CONTENIDO
+    menuTurnosTitulo.innerHTML = "Por favor seleccione la especialidad"
+    rowMenuTurnos.append(menuTurnosTitulo, menuTurnosEspecialidades)
+    console.log(rowMenuTurnos)
+    contenedorMenuTurnos.append(rowMenuTurnos)
+    console.log(contenedorMenuTurnos)
     
+
+    for (especialidades of arrEspecialidades) {
+        const divEspecialidad = document.createElement("div")
+        const imgEspecialidad = document.createElement("img")
+        const spanEspecialidad = document.createElement("span")
+
+        divEspecialidad.className = "col-md-4 seleccion_especialidad"
+
+        spanEspecialidad.className = "seleccion_especialidad--title"
+        spanEspecialidad.append(especialidades.especialidad)
+        imgEspecialidad.src = especialidades.img
+
+        divEspecialidad.append(imgEspecialidad,spanEspecialidad)
+        rowMenuTurnos.append(divEspecialidad)
+         
+    }
 }
+
+
+// calendar.getElement().addEventListener('change', e => {
+//     turno.setFecha(calendar.value().format('LLL'));
+// });
+
+
+// showMenu(menuIndex);
+
+// function turnoMenu(n) {
+//     showMenu(menuIndex += n);
+
+// }
+
+// function showMenu(n) {
+//     let menus = document.querySelectorAll(".menu__opciones");
+//     let botones = document.querySelectorAll(".menu__boton")
+//     const botonAnt = document.getElementById("menu__boton--ant")
+//     const botonSig = document.getElementById("menu__boton--sig")
+
+
+
+//     for (let i = 0; i < menus.length; i++) {
+//         menus[i].classList.add('display__none')
+//         if (i == 0) {
+//             botonAnt.classList.add('menu__boton--disabled')
+//             botonSig.classList.remove('menu__boton--disabled')
+//         }
+//         else if (i == menus.length) {
+//             botonAnt.classList.remove('menu__boton--disabled')
+//             botonSig.innerHTML = "Finalizar"
+//         }
+//         else {
+//             botonSig.classList.remove('menu__boton--disabled')
+//             botonAnt.classList.remove('menu__boton--disabled')
+//         }
+
+//     }
+//     menus[n - 1].classList.remove('display__none');
+
+// }
