@@ -150,14 +150,15 @@ footer {
   display: -ms-grid;
   display: grid;
   padding: 20px 10px;
-  background-color: #1b1e22;
+  background-color: #9FC771;
   border-radius: 3px;
   width: 25%;
   font-family: sans-serif;
 }
 
 .calendar__header {
-  color: #fff;
+  font-weight: bold;
+  color: black;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -169,7 +170,7 @@ footer {
 }
 
 .calendar .control {
-  color: #fff;
+  color: black;
   font-weight: bold;
   background-color: transparent;
   border: none;
@@ -185,13 +186,15 @@ footer {
 }
 
 .grid__header {
-  color: #fff;
+  color: black;
   margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .grid__body {
   grid-auto-rows: 40px;
-  color: #e3e3e3;
+  color: black;
+  font-weight: bold;
 }
 
 .grid__cell {
@@ -215,12 +218,13 @@ footer {
   background-color: #fff;
   border-radius: 50%;
   border: 2px solid white;
-  -webkit-box-shadow: 0 0 0 2px #1b1e22 inset;
-          box-shadow: 0 0 0 2px #1b1e22 inset;
+  -webkit-box-shadow: 0 0 0 2px #9FC771 inset;
+          box-shadow: 0 0 0 2px #9FC771 inset;
 }
 
 .grid__cell--disable {
   color: #424649;
+  opacity: 50%;
   cursor: not-allowed;
 }
 
@@ -243,10 +247,18 @@ footer {
   height: 50vh;
 }
 
+.seleccion_especialidad {
+  opacity: 50%;
+}
+
 .menu__botones {
   padding-top: 20px;
   padding-bottom: 20px;
   height: 10vh;
+}
+
+.especialidad_seleccionada {
+  opacity: 100%;
 }
 
 #menu__boton--ant {
