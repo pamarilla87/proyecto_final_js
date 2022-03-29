@@ -358,7 +358,7 @@ function mostrarMenuCalendario() {
     // CLASES
     rowMenuTurnos.className = "menu__opcion--fecha row"
     rowMenuTurnos.id = "menu__opcion--calendario"
-    menuTurnosTitulo.className = "col-md-12 menu__opcion--titulo"
+    menuTurnosTitulo.className = "col-md-12 menu__opcion--titulo pt-4"
     menuTurnosCalendario.className = "calendar menu__opcion--calendario"
     menuTurnosCalendario.id = "calendar"
 
@@ -449,7 +449,7 @@ function mostrarMenuSeleccionEspecialidad() {
     //AGREGAMOS CLASES 
     rowMenuTurnos.className = "row text-center menu__opcion--especialidad"
     rowMenuTurnos.id = "menu__especialidad"
-    menuTurnosTitulo.className = "col-md-12 menu__opcion--titulo"
+    menuTurnosTitulo.className = "col-12 menu__opcion--titulo p-3"
 
     //AGREGAMOS CONTENIDO
     menuTurnosTitulo.innerHTML = "Por favor seleccione la especialidad"
@@ -465,7 +465,7 @@ function mostrarMenuSeleccionEspecialidad() {
         const imgEspecialidad = document.createElement("img")
         const spanEspecialidad = document.createElement("span")
 
-        divEspecialidad.className = "col-md-4 seleccion_especialidad"
+        divEspecialidad.className = "col-md-4 col-12 seleccion_especialidad p-3"
         imgEspecialidad.className = "seleccion_especialidad--image"
 
         spanEspecialidad.className = "seleccion_especialidad--title"

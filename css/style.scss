@@ -1,29 +1,21 @@
-
-$colores: (
-	banners: linear-gradient(45deg, #9FC771, #fff, #9FC771),
-	fondo: #9FC771
-);
-
 * {
 	text-decoration: none;
 	margin: 0px;
 	padding: 0px;
 }
-
-
-@mixin grids-align-center {
-	align-items: center;
-	justify-content: center;
+html {
+	height: 100%;
+}
+body {
+	min-height: 100%;
 }
 nav {
-	background-image: map-get($colores, banners);
-	height: 15vh;
+	background-image: linear-gradient(45deg, #9fc771, #fff, #9fc771);
 }
-
 footer {
-	background-image: map-get($colores, banners);
-	height: 30vh;
-	margin-top: 2vh;
+	display: flex;
+	background-image: linear-gradient(45deg, #9fc771, #fff, #9fc771);
+	margin-top: auto;
 }
 .nav-link {
 	font-size: 15px;
@@ -40,7 +32,7 @@ footer {
 	}
 }
 .dropdown-item {
-	background-color: map-get($colores, fondo);
+	background-color: #9fc771;
 }
 .dropdown-menu {
 	padding: 0;
@@ -65,11 +57,12 @@ footer {
 	text-align: center;
 }
 .container-fluid {
-	@include grids-align-center;
+	align-items: center;
+	justify-content: center;
 }
 .contactus-form {
 	.btn-primary {
-		background-color: map-get($colores, fondo);
+		background-color: #9fc771;
 		border: 0;
 	}
 }
@@ -81,10 +74,8 @@ footer {
 .card {
 	width: 4fr;
 }
-
 .footer-titles {
 	font-size: 1.25rem;
-
 }
 .hover-grow {
 	display: inline-block;
@@ -109,36 +100,39 @@ footer {
 		transform: scale(1.1);
 	}
 }
-
 .especialidades-lista {
 	ul {
 		margin: 0;
 		p {
-			text-transform:uppercase;
+			text-transform: uppercase;
 		}
 	}
 }
-
 .btn-turnos {
 	text-transform: none;
 	text-decoration: none;
-	background-color:#9FC771;
+	background-color: #9fc771;
 }
-
 .display__none {
 	display: none;
 }
-
 .calendar {
 	display: grid;
 	padding: 20px 10px;
-	background-color:#9FC771;
+	font-size: 10px;
+	background-color: #9fc771;
 	border-radius: 3px;
-	width: 25%;
+	width: 100%;
 	font-family: sans-serif;
-	
+	.control {
+		color: black;
+		font-weight: bold;
+		background-color: transparent;
+		border: none;
+		cursor: pointer;
+		padding: 0 5px;
+	}
 }
-
 .calendar__header {
 	font-weight: bold;
 	color: black;
@@ -147,171 +141,310 @@ footer {
 	text-transform: uppercase;
 	margin-bottom: 30px;
 }
-
-.calendar .control {
-	color: black;
-	font-weight: bold;
-	background-color: transparent;
-	border: none;
-	cursor: pointer;
-	padding: 0 5px;
-}
-
-.grid__header, .grid__body{
+.grid__header, .grid__body {
 	display: grid;
+	font-size: 10px;
 	grid-template-columns: repeat(7, 4fr);
 }
-
 .grid__header {
 	color: black;
 	margin-bottom: 20px;
 	font-weight: bold;
 }
-
 .grid__body {
 	grid-auto-rows: 40px;
 	color: black;
 	font-weight: bold;
-
 }
-
 .grid__cell {
-	display:flex;
+	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-
 .grid__cell--gd {
 	cursor: pointer;
 }
-
 .grid__cell--selected {
 	color: #1b1e22;
 	background-color: #fff;
 	border-radius: 50%;
 	border: 2px solid white;
-	box-shadow: 0 0 0 2px #9FC771 inset;
+	box-shadow: 0 0 0 2px #9fc771 inset;
 }
-
 .grid__cell--disable {
 	color: #424649;
 	opacity: 50%;
 	cursor: not-allowed;
 }
-
 .seleccion_especialidad--title {
-	display:block;
+	display: block;
 	padding-top: 10px;
 }
-
-.menu__opcion--especialidad{
+.menu__opcion--especialidad {
 	padding-top: 20px;
 	padding-bottom: 20px;
-	display:flex;
-	justify-content:space-around;
+	display: flex;
+	justify-content: space-around;
 	align-items: center;
-	height: 50vh;
-
 }
-
 .seleccion_especialidad {
 	opacity: 50%;
 }
-
-
 .menu__botones {
 	border: 2rem;
 	padding-top: 20px;
 	padding-bottom: 20px;
-	height: 12vh;
-}	
-
+}
 .especialidad_seleccionada {
 	opacity: 100%;
 }
-
-#menu__boton--ant{
-	display:flex;
+#menu__boton--ant {
+	display: flex;
 	justify-content: flex-end;
 }
-
-.menu__boton > button {
-	background-color: #9FC771;
-	border: 2px;
-	padding: 10px;
-	border-radius: 5%;
+.menu__boton {
+	& > button {
+		background-color: #9fc771;
+		border: 2px;
+		padding: 10px;
+		border-radius: 5%;
+	}
 }
-
-#menu__boton--sig{
-	display:flex;
+#menu__boton--sig {
+	display: flex;
 	justify-content: flex-start;
 }
-
 .menu__boton--disabled {
 	opacity: 50%;
 	pointer-events: none;
 }
-
 .menu__opcion--titulo {
 	padding-bottom: 10px;
 	padding-top: 10px;
 	text-align: center;
 }
-
 .menu__opcion--calendario {
 	display: grid;
 }
-
-.menu__opcion--fecha{
+.menu__opcion--fecha {
 	display: flex;
 	justify-content: center;
-	height: 70vh;
 }
-
-
 .menu__boton--submit {
-	background-color: #9FC771;
+	background-color: #9fc771;
 	border: 0;
 	border-radius: 5%;
 	padding: 1rem;
 }
 
+
+@media (min-width: 481px) {
+	.calendar {
+		display: grid;
+		padding: 20px 10px;
+		background-color: #9fc771;
+		border-radius: 3px;
+		width: 75%;
+		font-family: sans-serif;
+   }
+	.calendar__header {
+		font-weight: bold;
+		color: black;
+		display: flex;
+		justify-content: space-between;
+		text-transform: uppercase;
+		margin-bottom: 30px;
+   }
+	.calendar .control {
+		color: black;
+		font-weight: bold;
+		background-color: transparent;
+		border: none;
+		cursor: pointer;
+		padding: 0 5px;
+   }
+	.grid__header, .grid__body {
+		display: grid;
+		font-size: 15px;
+		grid-template-columns: repeat(7, 4fr);
+   }
+	.grid__header {
+		color: black;
+		margin-bottom: 20px;
+		font-weight: bold;
+   }
+	.grid__body {
+		grid-auto-rows: 40px;
+		color: black;
+		font-weight: bold;
+   }
+	.grid__cell {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+   }
+	.grid__cell--gd {
+		cursor: pointer;
+   }
+	.grid__cell--selected {
+		color: #1b1e22;
+		background-color: #fff;
+		border-radius: 50%;
+		border: 2px solid white;
+		box-shadow: 0 0 0 2px #9fc771 inset;
+   }
+	.grid__cell--disable {
+		color: #424649;
+		opacity: 50%;
+		cursor: not-allowed;
+   }
+}
 @media (min-width: 768px) {
 	.img-index {
 		border-radius: 50%;
-	}
+   }
 	.img-quienessomos {
 		max-width: 50%;
-	}
+   }
 	.nav-item {
 		margin-left: 1rem;
-	}
-
-	.especialidades-lista {
-		ul {
-			margin: 1rem 0 1rem 0;
-			
-			p {
-				text-transform:uppercase;
-			}
-		}
-	}
+   }
+	.especialidades-lista ul {
+		margin: 1rem 0 1rem 0;
+   }
+	.especialidades-lista ul p {
+		text-transform: uppercase;
+   }
+	.calendar {
+		display: grid;
+		padding: 20px 10px;
+		background-color: #9fc771;
+		border-radius: 3px;
+		width: 50%;
+		font-family: sans-serif;
+   }
+	.calendar__header {
+		font-weight: bold;
+		color: black;
+		display: flex;
+		justify-content: space-between;
+		text-transform: uppercase;
+		margin-bottom: 30px;
+   }
+	.calendar .control {
+		color: black;
+		font-weight: bold;
+		background-color: transparent;
+		border: none;
+		cursor: pointer;
+		padding: 0 5px;
+   }
+	.grid__header, .grid__body {
+		display: grid;
+		font-size: 15px;
+		grid-template-columns: repeat(7, 4fr);
+   }
+	.grid__header {
+		color: black;
+		margin-bottom: 20px;
+		font-weight: bold;
+   }
+	.grid__body {
+		grid-auto-rows: 40px;
+		color: black;
+		font-weight: bold;
+   }
+	.grid__cell {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+   }
+	.grid__cell--gd {
+		cursor: pointer;
+   }
+	.grid__cell--selected {
+		color: #1b1e22;
+		background-color: #fff;
+		border-radius: 50%;
+		border: 2px solid white;
+		box-shadow: 0 0 0 2px #9fc771 inset;
+   }
+	.grid__cell--disable {
+		color: #424649;
+		opacity: 50%;
+		cursor: not-allowed;
+   }
 }
-
-
 @media (min-width: 992px) {
 	.nav-link {
 		font-size: 20px;
 		margin: 3px;
 		font-weight: bold;
 		text-align: center;
-	}
+   }
 	footer {
 		font-size: 15px;
-
-	}
+   }
 	#navbarNavDropdown {
 		justify-content: center;
-	}
-
+   }
+	.calendar {
+		display: grid;
+		padding: 20px 10px;
+		background-color: #9fc771;
+		border-radius: 3px;
+		width: 30%;
+		font-family: sans-serif;
+   }
+	.calendar__header {
+		font-weight: bold;
+		color: black;
+		display: flex;
+		justify-content: space-between;
+		text-transform: uppercase;
+		margin-bottom: 30px;
+   }
+	.calendar .control {
+		color: black;
+		font-weight: bold;
+		background-color: transparent;
+		border: none;
+		cursor: pointer;
+		padding: 0 5px;
+   }
+	.grid__header, .grid__body {
+		display: grid;
+		font-size: 15px;
+		grid-template-columns: repeat(7, 4fr);
+   }
+	.grid__header {
+		color: black;
+		margin-bottom: 20px;
+		font-weight: bold;
+   }
+	.grid__body {
+		grid-auto-rows: 40px;
+		color: black;
+		font-weight: bold;
+   }
+	.grid__cell {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+   }
+	.grid__cell--gd {
+		cursor: pointer;
+   }
+	.grid__cell--selected {
+		color: #1b1e22;
+		background-color: #fff;
+		border-radius: 50%;
+		border: 2px solid white;
+		box-shadow: 0 0 0 2px #9fc771 inset;
+   }
+	.grid__cell--disable {
+		color: #424649;
+		opacity: 50%;
+		cursor: not-allowed;
+   }
 }
