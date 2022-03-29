@@ -220,10 +220,10 @@ footer {
 
 
 .menu__botones {
+	border: 2rem;
 	padding-top: 20px;
 	padding-bottom: 20px;
-	height: 10vh;
-
+	height: 12vh;
 }	
 
 .especialidad_seleccionada {
@@ -233,8 +233,6 @@ footer {
 #menu__boton--ant{
 	display:flex;
 	justify-content: flex-end;
-	
-
 }
 
 .menu__boton > button {
@@ -268,6 +266,17 @@ footer {
 	display: flex;
 	justify-content: center;
 	height: 70vh;
+}
+
+.div__boton--submit {
+	
+}
+
+.menu__boton--submit {
+	background-color: #9FC771;
+	border: 0;
+	border-radius: 5%;
+	padding: 1rem;
 }
 
 @media (min-width: 768px) {

@@ -2,7 +2,7 @@ class Calendar {
     constructor(id) {
         this.cells = []
         this.selectedDate = null;
-        this.currentMonth = moment();
+        this.currentMonth = dayjs();
         this.elCalendar = document.getElementById(id);
         this.showTeamplate();
         this.elGridBody = this.elCalendar.querySelector('.grid__body');
@@ -32,10 +32,10 @@ class Calendar {
 
     changeMonths(next = true) {
         if (next) {
-            this.currentMonth.add(1, 'month');
+            this.currentMonth = this.currentMonth.add(1, 'month');
         }
         else {
-            this.currentMonth.subtract(1, 'month');
+            this.currentMonth = this.currentMonth.subtract(1, 'month');
         }
     }
 
@@ -78,7 +78,7 @@ class Calendar {
         let disabledClass = '';
         for (let i = 0; i < this.cells.length; i++) {
             disabledClass = '';
-            if (!this.cells[i].isInCurrentMonth) {
+            if ((this.cells[i].notInCurrentMonth) || (this.cells[i].isBeforeToday)) {
                 disabledClass = 'grid__cell--disable'
             }
             templateCell += `
@@ -117,31 +117,32 @@ class Calendar {
         return this.selectedDate;
     }
 
-    generateDates(monthToShow = moment()) {
-        if (!moment.isMoment(monthToShow)) {
+    // TO FIX: Inmutabilidad de dayjs vs momentjs
+    generateDates(monthToShow = dayjs()) {
+        if (!dayjs.isDayjs(monthToShow)) {
             return null;
         }
-        let dateStart = moment(monthToShow).startOf('month');
-        let dateEnd = moment(monthToShow).endOf('month');
+        let today = dayjs()
+        let dateStart = dayjs(monthToShow).startOf('month');
+        let dateEnd = dayjs(monthToShow).endOf('month');
         let cells = [];
 
-        while (dateStart.day() !== 1) {
-            dateStart.subtract(1, 'days');
+        while (dateStart.day() != 1) {
+            dateStart = dateStart.subtract(1, 'days');
         }
 
-        while (dateEnd.day() !== 0) {
-            dateEnd.add(1, 'days');
+        while (dateEnd.day() != 0) {
+            dateEnd = dateEnd.add(1, 'days');
         }
 
         do {
             cells.push({
-                date: moment(dateStart),
-                isInCurrentMonth: dateStart.month() === monthToShow.month()
-
+                date: dayjs(dateStart),
+                notInCurrentMonth: dateStart.month() !== monthToShow.month(),
+                isBeforeToday: dateStart <= today
             })
-            dateStart.add(1, 'days');
-
-        } while (dateStart.isSameOrBefore(dateEnd));
+            dateStart = dateStart.add(1, 'days');
+        } while (!dateStart.isAfter(dateEnd));
 
         return cells;
     }
@@ -149,16 +150,25 @@ class Calendar {
 }
 
 class Turno {
-    constructor(nombreApellido = null, especialidad = null, fecha = null) {
-        this.nombreApellido = nombreApellido;
+    constructor(nombre = null, telefono = null, email = null, especialidad = null, fecha = null) {
+        this.nombreMascota = nombre
+        this.telefonoCliente = telefono
+        this.emailCliente = email
         this.especialidad = especialidad;
         this.fecha = fecha;
-        this.addEventListenerToSpec();
 
     }
 
-    setNombre(nombre) {
-        this.nombreApellido = nombre;
+    setNombreMascota(nombre) {
+        this.nombreMascota = nombre;
+    }
+
+    setTelefonoCliente(telefono) {
+        this.telefonoCliente = telefono
+    }
+
+    setEmailCliente(email) {
+        this.emailCliente = email
     }
 
     setEspecialidad(especialidad) {
@@ -169,47 +179,39 @@ class Turno {
         this.fecha = fecha;
     }
 
-    addEventListenerToSpec() {
-        let elSpecs = document.querySelectorAll(".seleccion_especialidad");
-        elSpecs.forEach(elSpecs => {
-            elSpecs.addEventListener('click', e => {
-                let elTarget = e.target;
-                let selectedSpec = document.querySelector(".especialidad_seleccionada");
-                if (selectedSpec) {
-                    selectedSpec.classList.remove("especialidad_seleccionada")
-                }
-                if (elTarget.classList.contains('seleccion_especialidad--clinica')) {
-                    this.especialidad = 'CLINICA';
-                    elSpecs.classList.add("especialidad_seleccionada")
-                }
-                if (elTarget.classList.contains('seleccion_especialidad--diagnostico')) {
-                    this.especialidad = 'DIAGNOSTICO';
-                    elSpecs.classList.add("especialidad_seleccionada")
-
-                }
-                if (elTarget.classList.contains('seleccion_especialidad--laboratorio')) {
-                    this.especialidad = 'LABORATORIO';
-                    elSpecs.classList.add("especialidad_seleccionada")
-                }
-            }); 
-        });
-    };
-
 }
 
 //TODO: CREAR LAS PÁGINAS DE TURNO DINÁMICAMENTE. NO IR A LA SIGUIENTE PÁGINA SI ALGUN DATO NO ES COMPLETADO DENTRO DE SU PAGINA
 //MOSTRAR INFORMACION DEL TURNO POR PANTALLA. 
 
-
-// let calendar = new Calendar('calendar');
-// let turno = new Turno()
-// let menuIndex = 1;
-
 mostrarMenuSeleccionEspecialidad();
 let nuevoTurno = new Turno()
 
 
-
+function addEventListenerToSpec() {
+    let elSpecs = document.querySelectorAll(".seleccion_especialidad");
+    elSpecs.forEach(elSpecs => {
+        elSpecs.addEventListener('click', e => {
+            let elTarget = e.target;
+            let selectedSpec = document.querySelector(".especialidad_seleccionada");
+            if (selectedSpec) {
+                selectedSpec.classList.remove("especialidad_seleccionada")
+            }
+            if (elTarget.classList.contains('seleccion_especialidad--clinica')) {
+                nuevoTurno?.setEspecialidad('CLÍNICA');
+                elSpecs.classList.add("especialidad_seleccionada")
+            }
+            if (elTarget.classList.contains('seleccion_especialidad--diagnostico')) {
+                nuevoTurno?.setEspecialidad('DIAGNÓSTICO');
+                elSpecs.classList.add("especialidad_seleccionada")
+            }
+            if (elTarget.classList.contains('seleccion_especialidad--laboratorio')) {
+                nuevoTurno?.setEspecialidad('LABORATORIO');
+                elSpecs.classList.add("especialidad_seleccionada")
+            }
+        });
+    });
+};
 
 
 function mostrarBotonesSig(id) {
@@ -231,17 +233,15 @@ function mostrarBotonesSig(id) {
     botonAnterior.id = "buttonTurnos_Ant"
     botonSiguiente.id = "buttonTurnos_Sig"
     divBotonAnt.id = "menu__boton--ant"
-    divBotonSig.id = "menu__boton--sig"
 
-    
+
     // AGREGAMOS CONTENIDO
     botonAnterior.innerHTML = "Anterior"
     botonSiguiente.innerHTML = "Siguiente"
-    botonSiguiente.addEventListener
 
     divBotonSig.append(botonSiguiente)
     divBotonAnt.append(botonAnterior)
-    rowBotones.append(divBotonAnt,divBotonSig)
+    rowBotones.append(divBotonAnt, divBotonSig)
     contenedorMenuTurnos.append(rowBotones)
 
     if (id == 0) {
@@ -252,25 +252,48 @@ function mostrarBotonesSig(id) {
         botonAnterior.classList.remove("menu__boton--disabled")
         botonSiguiente.classList.remove("menu__boton--disabled")
     }
-    if (id == 2) {  
+    if (id == 2) {
         botonAnterior.classList.remove("menu__boton--disabled")
-        botonSiguiente.classList.add("menu__boton--disabled")
+        deleteElementById("menu__boton--sig")
+        // addSubmitButton(rowBotones);
+        // botonSiguiente.classList.add("menu__boton--disabled")
     }
     addEventListenerBotonSiguiente(id);
+    addEventListenerBotonAnterior(id);
 }
 
-function addEventListenerBotonSiguiente(page){
-    let elSig = document.querySelectorAll('#buttonTurnos_Sig')
-    elSig.forEach (elSig => {
-		elSig.addEventListener('click', e => {
+function addSubmitButton() {
+    let idMenu = 2
+    const contenedorMenuTurnos = document.getElementById("container_MenuTurnos");
+    const divBotonSubmit = document.createElement("div")
+    const botonSubmit = document.createElement("input") 
+    
+    divBotonSubmit.className = "menu__boton col-6"
+    divBotonSubmit.id = "menu__boton--sig"
+    botonSubmit.className = "menu__boton--submit"
+    botonSubmit.id = "buttonTurnos_Sig"
+    botonSubmit.type = "submit"
+
+    divBotonSubmit.append(botonSubmit)
+    rowBotones.append(divBotonSubmit)
+    contenedorMenuTurnos.append(rowBotones)
+
+    addEventListenerBotonSiguiente(idMenu);
+}
+
+function addEventListenerBotonSiguiente(page) {
+    let elAnt = document.querySelectorAll('#buttonTurnos_Sig')
+    elAnt.forEach(elAnt => {
+        elAnt.addEventListener('click', e => {
             if (page == 0) {
                 if (!nuevoTurno.especialidad) {
-                    
                     alert("Por favor selecciones una especialidad")
                 }
                 else {
+                    deleteElementById('menu__especialidad')
+                    deleteElementById('menu__botones--id')
                     mostrarMenuCalendario();
-                    console.log("Pasar a la segunda página")
+                    // console.log("Pasar a la segunda página")
                 }
             }
             if (page == 1) {
@@ -278,28 +301,63 @@ function addEventListenerBotonSiguiente(page){
                     alert("Por favor seleccione la fecha")
                 }
                 else {
-                    console.log("Pasar a la tercera página")
-                } 
+                    deleteElementById('menu__opcion--calendario')
+                    deleteElementById('menu__botones--id')
+                    mostrarFormTurnos()
+                    // console.log("Pasar a la tercera página")
+                }
             }
             if (page == 2) {
-                console.log("submit info")
+                // console.log("submit info")
+                submitTurno()
+            }
+            
+        });
+    });
+}
+
+function submitTurno() {
+    nuevoTurno?.setNombreMascota(document.getElementById('form_name').value)
+    nuevoTurno?.setTelefonoCliente(document.getElementById('form_phone').value)
+    nuevoTurno?.setEmailCliente(document.getElementById('form_email').value)
+
+    const enJSON = JSON.stringify(nuevoTurno)
+    sessionStorage.setItem("nuevoTurno", enJSON)
+    console.log(enJSON)
+
+}
+
+function addEventListenerBotonAnterior(page) {
+    let elAnt = document.querySelectorAll('#buttonTurnos_Ant')
+    elAnt.forEach(elAnt => {
+        elAnt.addEventListener('click', e => {
+            if (page == 1) {
+                mostrarMenuSeleccionEspecialidad()
+                deleteElementById('menu__opcion--calendario')
+                deleteElementById('menu__botones--id')
+                // console.log("Voler a la primera página")
+            }
+            if (page == 2) {
+                mostrarMenuCalendario()
+                deleteElementById('menu__form--id')
+                deleteElementById('menu__botones--id')
+                // console.log("Volver a la segunda página")
             }
         });
-	});
+    });
 }
 
 function mostrarMenuCalendario() {
     let idMenu = 1;
-    deleteElementById('menu__especialidad')
-    deleteElementById('menu__botones--id')
     const contenedorMenuTurnos = document.getElementById("container_MenuTurnos")
-    const rowMenuTurnos = document.createElement("div") 
+    const rowMenuTurnos = document.createElement("div")
     const menuTurnosTitulo = document.createElement("div")
     const menuTurnosCalendario = document.createElement("div")
     const spanMenuCalendario = document.createElement("span")
 
     // CLASES
     rowMenuTurnos.className = "menu__opcion--fecha row"
+    rowMenuTurnos.id = "menu__opcion--calendario"
     menuTurnosTitulo.className = "col-md-12 menu__opcion--titulo"
     menuTurnosCalendario.className = "calendar menu__opcion--calendario"
     menuTurnosCalendario.id = "calendar"
@@ -307,15 +365,65 @@ function mostrarMenuCalendario() {
     // CONTENIDO
     spanMenuCalendario.innerHTML = "Por favor seleccione la fecha"
     menuTurnosTitulo.append(spanMenuCalendario)
-    rowMenuTurnos.append(menuTurnosTitulo,menuTurnosCalendario)
+    rowMenuTurnos.append(menuTurnosTitulo, menuTurnosCalendario)
     contenedorMenuTurnos.append(rowMenuTurnos)
 
     let calendario = new Calendar('calendar');
     calendario.getElement().addEventListener('change', e => {
-        nuevoTurno.setFecha(calendario.value().format('LLL'));
+        nuevoTurno?.setFecha(calendario.value().format('DD-MMM-YY'))
     });
 
     mostrarBotonesSig(idMenu)
+}
+
+function mostrarFormTurnos() {
+    let idMenu = 2;
+    const contenedorMenuTurnos = document.getElementById("container_MenuTurnos")
+    const rowMenuTurnos = document.createElement("div")
+    const divForm = document.createElement("form")
+    const arrInfoCliente = [
+        { id: '0', field: "Nombre", type: "text", control: "form_name", holder: "Nombre de la mascota...", pattern:"" },
+        { id: '1', field: "Email", type: "email", control: "form_email", holder: "Dirección de email...", pattern: "" },
+        { id: '2', field: "Teléfono", type: "tel", control: "form_phone", holder: "(011) 4321-5678", pattern: "[0-9]{3}-[0-9]{4}-[0-9]{4}" }
+    ];
+
+    rowMenuTurnos.className = "menu__opcion menu__opcion--nombre row"
+    rowMenuTurnos.id = "menu__form--id"
+    divForm.className = "row g-3"
+    divForm.action = "#"
+    divForm.method = "POST"
+    divForm.enctype = "multipart/form-data"
+
+    mostrarBotonesSig(idMenu)
+
+    for (dato of arrInfoCliente) {
+        //CREAR PARENTS
+        const divMenuOpcion = document.createElement("div")
+        const divMenuLabel = document.createElement("label")
+        const divMenuInput = document.createElement("input")
+
+        // AGREGAR CLASES Y ATTRS
+        divMenuOpcion.className = "col-md-12 menu_opciones"
+        divMenuLabel.className = "form-label"
+        divMenuLabel.for = "email"
+
+        divMenuInput.type = dato.type
+        divMenuInput.id = dato.control
+        divMenuInput.className = "form-control"
+        divMenuInput.placeholder = dato.holder
+        divMenuInput.pattern = dato.pattern
+        divMenuInput.required = true
+
+        // AGREGAR CONTENIDO
+        divMenuLabel.innerHTML = dato.field
+
+        rowMenuTurnos.append(divForm)
+        divForm.append(divMenuOpcion)
+        divMenuOpcion.append(divMenuLabel, divMenuInput)
+        contenedorMenuTurnos.append(rowMenuTurnos)
+    }
+
+
 }
 
 function deleteElementById(elId) {
@@ -324,7 +432,8 @@ function deleteElementById(elId) {
 }
 
 function mostrarMenuSeleccionEspecialidad() {
-    let idMenu=0
+    let idMenu = 0
+    
     // CREAMOS LOS ELEMENTOS PARENT
     const contenedorMenuTurnos = document.getElementById("container_MenuTurnos")
     const menuTurnosTitulo = document.createElement("div")
@@ -359,8 +468,7 @@ function mostrarMenuSeleccionEspecialidad() {
         imgEspecialidad.className = "seleccion_especialidad--image"
 
         spanEspecialidad.className = "seleccion_especialidad--title"
-        // divEspecialidad.classList.add(especialidades.customClass)
-        // imgEspecialidad.classList.add(`seleccion_especialidad--${especialidades.id}`)
+
         imgEspecialidad.classList.add(especialidades.customClass)
         spanEspecialidad.append(especialidades.especialidad)
         imgEspecialidad.src = especialidades.img
@@ -369,44 +477,6 @@ function mostrarMenuSeleccionEspecialidad() {
         rowMenuTurnos.append(divEspecialidad)
 
     }
+
+    addEventListenerToSpec();
 }
-
-
-
-
-
-
-// showMenu(menuIndex);
-
-// function turnoMenu(n) {
-//     showMenu(menuIndex += n);
-
-// }
-
-// function showMenu(n) {
-//     let menus = document.querySelectorAll(".menu__opciones");
-//     let botones = document.querySelectorAll(".menu__boton")
-//     const botonAnt = document.getElementById("menu__boton--ant")
-//     const botonSig = document.getElementById("menu__boton--sig")
-
-
-
-//     for (let i = 0; i < menus.length; i++) {
-//         menus[i].classList.add('display__none')
-//         if (i == 0) {
-//             botonAnt.classList.add('menu__boton--disabled')
-//             botonSig.classList.remove('menu__boton--disabled')
-//         }
-//         else if (i == menus.length) {
-//             botonAnt.classList.remove('menu__boton--disabled')
-//             botonSig.innerHTML = "Finalizar"
-//         }
-//         else {
-//             botonSig.classList.remove('menu__boton--disabled')
-//             botonAnt.classList.remove('menu__boton--disabled')
-//         }
-
-//     }
-//     menus[n - 1].classList.remove('display__none');
-
-// }

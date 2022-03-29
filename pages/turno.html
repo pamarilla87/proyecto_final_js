@@ -15,10 +15,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <script src="../js/script.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" ></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/plugin/dayOfYear.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
     <title>Veterinaria San Martin - Home</title>
     <meta name="description" content="Pagina principal de Veterinaria San Martin">
     <meta name="keywords" content="Veterinaria, San Martin, Perros, Gatos, Animal">
@@ -78,68 +79,9 @@
 
 
     </div>
-    <!-- <div class="container menu__opciones display__none" id="contenedorMenu">
-        <div class="row menu__opcion menu__opcion--especialidad text-center display__none"  id="contenedorEspecialidad">
-            <div class="col-md-12 menu__opcion--titulo ">
-                <span>Por favor seleccione la especialidad</span>
-            </div>
-
-            <div class="col-md-4 seleccion_especialidad seleccion_especialidad--clinica ">
-                <img class="seleccion__imagen--clinica" src="../img/clinica111x106.png" alt="clinica">
-                <span class="seleccion_especialidad--title seleccion_titulo--clinica">CLINICA</span>
-            </div>
-
-            <div class="col-md-4 seleccion_especialidad seleccion_especialidad--laboratorio ">
-                <img class="seleccion__imagen--laboratorio" src="../img/laboratorio111x106.png" alt="laboratorio">
-                <span class="seleccion_especialidad--title seleccion_titulo--laboratorio">LABORATORIO</span>
-            </div>
-
-            <div class="col-md-4 seleccion_especialidad seleccion_especialidad--diagnostico">
-                <img class="seleccion__imagen--diagnostico" src="../img/diagnostico111x106.png" alt="diagnostico">
-                <span class="seleccion_especialidad--title seleccion_titulo--diagnostico">DIAGNOSTICO POR IMAGENES</span>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- <div class="menu__opciones container display__none">
-        <div class="menu__opcion--fecha row display__none">
-            <div class="menu__opcion--titulo col-md-12">
-                <span>Por favor seleccione la fecha</span>
-            </div>
-            <div class="calendar menu__opcion--calendario" id="calendar"></div>
-        </div>
-    </div> -->
-
-    
-    <!-- <div class="menu__opciones container display__none">
-        <div class="menu__opcion menu__opcion--nombre row" >
-            <form class="row g-3" action="#" method="POST" enctype="multipart/form-data">
-                <div class="col-md-12 ">
-                    <label for="name" class="form-label">Nombre:</label>
-                    <input type="text" class="form-control" id="name" placeholder="Nombre de la mascota...">
-                </div>
-    
-                <div class="col-md-12 ">
-                    <label for="email" class="form-label">Email:</label>
-                    <input type="email" class="form-control" id="email" placeholder="Dirección de email..." required>
-                </div>
-                <div class="col-md-12 ">
-                    <label for="phone" class="form-label">Telefono:</label>
-                    <input type="text" class="form-control" id="phone" placeholder="(011) 4321-5678">
-                </div>
-            </form>
-        </div>
-    </div>  -->
 
     <div class="container-fluid" id="container_Botones">
-        <!-- <div class="menu__botones row text-center">
-            <div class="menu__boton col-6" id="menu__boton--ant">
-                <button  id="buttonTurnos_Ant" onclick="turnoMenu(-1)" >Anterior</button>
-            </div>
-            <div class="menu__boton  col-6" id="menu__boton--sig">
-                <button id="buttonTurnos_Sig" onclick="turnoMenu(1)">Siguiente</button>
-            </div>
-        </div> -->
+
     </div>
 
     <!-- FOOTER STARTS -->
@@ -169,7 +111,7 @@
                 </div>
             </div>
         </div>
-    </footer>    
+    </footer>
 
 </body>
 
