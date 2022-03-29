@@ -255,16 +255,16 @@ function mostrarBotonesSig(id) {
     if (id == 2) {
         botonAnterior.classList.remove("menu__boton--disabled")
         deleteElementById("menu__boton--sig")
-        // addSubmitButton(rowBotones);
+        addSubmitButton(rowBotones);
         // botonSiguiente.classList.add("menu__boton--disabled")
     }
     addEventListenerBotonSiguiente(id);
     addEventListenerBotonAnterior(id);
 }
 
-function addSubmitButton() {
+function addSubmitButton(rowBotones) {
     let idMenu = 2
-    const contenedorMenuTurnos = document.getElementById("container_MenuTurnos");
+    const contenedorMenuTurnos = document.getElementById("container_Botones");
     const divBotonSubmit = document.createElement("div")
     const botonSubmit = document.createElement("input") 
     
@@ -335,13 +335,13 @@ function addEventListenerBotonAnterior(page) {
                 mostrarMenuSeleccionEspecialidad()
                 deleteElementById('menu__opcion--calendario')
                 deleteElementById('menu__botones--id')
-                // console.log("Voler a la primera página")
+                console.log("Voler a la primera página")
             }
             if (page == 2) {
                 mostrarMenuCalendario()
                 deleteElementById('menu__form--id')
                 deleteElementById('menu__botones--id')
-                // console.log("Volver a la segunda página")
+                console.log("Volver a la segunda página")
             }
         });
     });
