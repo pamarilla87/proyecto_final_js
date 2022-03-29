@@ -216,7 +216,7 @@ function addEventListenerToSpec() {
 
 function mostrarBotonesSig(id) {
     // CREAMOS ELEMENTOS PARENTS
-    const contenedorMenuTurnos = document.getElementById("container_Botones");
+    const contenedorMenuTurnos = document.getElementById("container_MenuTurnos");
     const divBotonSig = document.createElement("div")
     const divBotonAnt = document.createElement("div")
     const botonAnterior = document.createElement("button")
@@ -264,7 +264,7 @@ function mostrarBotonesSig(id) {
 
 function addSubmitButton(rowBotones) {
     let idMenu = 2
-    const contenedorMenuTurnos = document.getElementById("container_Botones");
+    const contenedorMenuTurnos = document.getElementById("container_MenuTurnos");
     const divBotonSubmit = document.createElement("div")
     const botonSubmit = document.createElement("input") 
     
@@ -394,7 +394,7 @@ function mostrarFormTurnos() {
     divForm.method = "POST"
     divForm.enctype = "multipart/form-data"
 
-    mostrarBotonesSig(idMenu)
+    
 
     for (dato of arrInfoCliente) {
         //CREAR PARENTS
@@ -423,6 +423,7 @@ function mostrarFormTurnos() {
         contenedorMenuTurnos.append(rowMenuTurnos)
     }
 
+    mostrarBotonesSig(idMenu)
 
 }
 
