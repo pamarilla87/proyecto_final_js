@@ -181,8 +181,7 @@ class Turno {
 
 }
 
-//TODO: CREAR LAS PÁGINAS DE TURNO DINÁMICAMENTE. NO IR A LA SIGUIENTE PÁGINA SI ALGUN DATO NO ES COMPLETADO DENTRO DE SU PAGINA
-//MOSTRAR INFORMACION DEL TURNO POR PANTALLA. 
+//TODO: MOSTRAR INFO TURNO POR PANTALLA. FIX BOTON SUBMIT. AGREGAR HORA DE TURNO
 
 mostrarMenuSeleccionEspecialidad();
 let nuevoTurno = new Turno()
@@ -266,17 +265,21 @@ function addSubmitButton(rowBotones) {
     let idMenu = 2
     const contenedorMenuTurnos = document.getElementById("container_MenuTurnos");
     const divBotonSubmit = document.createElement("div")
-    const botonSubmit = document.createElement("input") 
-    
+    const botonSubmit = document.createElement("input")
+
     divBotonSubmit.className = "menu__boton col-6"
     divBotonSubmit.id = "menu__boton--sig"
-    botonSubmit.className = "menu__boton--submit"
-    botonSubmit.id = "buttonTurnos_Sig"
     botonSubmit.type = "submit"
+    botonSubmit.innerHTML = "Enviar"
+    botonSubmit.id = "buttonTurnos_Sig"
+    botonSubmit.className = "menu__boton--submit"
 
     divBotonSubmit.append(botonSubmit)
     rowBotones.append(divBotonSubmit)
     contenedorMenuTurnos.append(rowBotones)
+    //TO FIX: Buscar mejor forma de hacer esto
+    // botonSubmit.form = "form_customerInfo"
+    document.getElementById("buttonTurnos_Sig").setAttribute('form', 'form_customerInfo')
 
     addEventListenerBotonSiguiente(idMenu);
 }
@@ -311,7 +314,7 @@ function addEventListenerBotonSiguiente(page) {
                 // console.log("submit info")
                 submitTurno()
             }
-            
+
         });
     });
 }
@@ -382,19 +385,18 @@ function mostrarFormTurnos() {
     const rowMenuTurnos = document.createElement("div")
     const divForm = document.createElement("form")
     const arrInfoCliente = [
-        { id: '0', field: "Nombre", type: "text", control: "form_name", holder: "Nombre de la mascota...", pattern:"" },
-        { id: '1', field: "Email", type: "email", control: "form_email", holder: "Dirección de email...", pattern: "" },
-        { id: '2', field: "Teléfono", type: "tel", control: "form_phone", holder: "(011) 4321-5678", pattern: "[0-9]{3}-[0-9]{4}-[0-9]{4}" }
+        { id: '0', field: "Nombre", type: "text", control: "form_name", holder: "Nombre de la mascota...", pattern: "[a-zA-Z]{1,15}", title: "Formato de nombre inválido. Solo se permiten letras mayúsculas y minúsculas." },
+        { id: '1', field: "Email", type: "email", control: "form_email", holder: "Dirección de email...", pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", title: "Formato de email inválido. Debe cumplir con el siguiente formato: ejemplo@ejemplo.com" },
+        { id: '2', field: "Teléfono", type: "tel", control: "form_phone", holder: "(011) 4321-5678", pattern: "[0-9]{3}-[0-9]{4}-[0-9]{4}", title: "Formato teléfono inválido. Debe cumplir con el siguiente formato 011-5488-2339" }
     ];
-
+    
     rowMenuTurnos.className = "menu__opcion menu__opcion--nombre row"
     rowMenuTurnos.id = "menu__form--id"
     divForm.className = "row g-3"
     divForm.action = "#"
     divForm.method = "POST"
+    divForm.id = "form_customerInfo"
     divForm.enctype = "multipart/form-data"
-
-    
 
     for (dato of arrInfoCliente) {
         //CREAR PARENTS
@@ -412,6 +414,7 @@ function mostrarFormTurnos() {
         divMenuInput.className = "form-control"
         divMenuInput.placeholder = dato.holder
         divMenuInput.pattern = dato.pattern
+        divMenuInput.title = dato.title
         divMenuInput.required = true
 
         // AGREGAR CONTENIDO
@@ -434,7 +437,7 @@ function deleteElementById(elId) {
 
 function mostrarMenuSeleccionEspecialidad() {
     let idMenu = 0
-    
+
     // CREAMOS LOS ELEMENTOS PARENT
     const contenedorMenuTurnos = document.getElementById("container_MenuTurnos")
     const menuTurnosTitulo = document.createElement("div")
@@ -476,7 +479,6 @@ function mostrarMenuSeleccionEspecialidad() {
 
         divEspecialidad.append(imgEspecialidad, spanEspecialidad)
         rowMenuTurnos.append(divEspecialidad)
-
     }
 
     addEventListenerToSpec();
