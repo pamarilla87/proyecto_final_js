@@ -320,14 +320,18 @@ function addEventListenerBotonSiguiente(page) {
 }
 
 function submitTurno() {
-    nuevoTurno?.setNombreMascota(document.getElementById('form_name').value)
-    nuevoTurno?.setTelefonoCliente(document.getElementById('form_phone').value)
-    nuevoTurno?.setEmailCliente(document.getElementById('form_email').value)
-
-    const enJSON = JSON.stringify(nuevoTurno)
-    sessionStorage.setItem("nuevoTurno", enJSON)
-    console.log(enJSON)
-
+    var formAction = document.getElementById("form_customerInfo")
+    
+    formAction.onsubmit = function (e) {
+        nuevoTurno?.setNombreMascota(document.getElementById('form_name').value)
+        nuevoTurno?.setTelefonoCliente(document.getElementById('form_phone').value)
+        nuevoTurno?.setEmailCliente(document.getElementById('form_email').value)
+        e.preventDefault()
+    
+        const enJSON = JSON.stringify(nuevoTurno)
+        sessionStorage.setItem("nuevoTurno", enJSON)
+        console.log(enJSON)
+    }
 }
 
 function addEventListenerBotonAnterior(page) {
