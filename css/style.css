@@ -239,6 +239,25 @@ footer {
   cursor: not-allowed;
 }
 
+.time__picker {
+  padding-top: 10px;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  background: #9fc771;
+  border-radius: 10%;
+}
+
+.time__picker--select {
+  font-weight: bold;
+  background-color: #9fc771;
+  padding: 5px;
+}
+
+.time__picker--select > option {
+  text-align: center;
+}
+
 .seleccion_especialidad--title {
   display: block;
   padding-top: 10px;

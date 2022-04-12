@@ -62,6 +62,31 @@ class Calendar {
                     </div>
                 </div>
             </div>
+            <div class="time__picker"> 
+                <select name="" id="" class="time__picker--select"> 
+                    <option value="01"> 01 </option>
+                    <option value="01"> 02 </option>
+                    <option value="01"> 03 </option>
+                    <option value="01"> 04 </option>
+                    <option value="01"> 05 </option>
+                    <option value="01"> 06 </option>
+                    <option value="01"> 07 </option>
+                    <option value="01"> 08 </option>
+                    <option value="01"> 09 </option>
+                    <option value="01"> 10 </option>
+                    <option value="01"> 11 </option>
+                    <option value="01"> 12 </option>
+                </select>            
+                :
+                <select name="" id="" class="time__picker--select"> 
+                    <option value="01"> 00 </option>
+                    <option value="02"> 30 </option>
+                </select>
+                <select name="" id="" class="time__picker--select"> 
+                    <option value="am"> AM </option>
+                    <option value="pm"> PM </option>
+                </select>   
+            </div>
         `;
         return template;
     }
@@ -78,7 +103,7 @@ class Calendar {
         let disabledClass = '';
         for (let i = 0; i < this.cells.length; i++) {
             disabledClass = '';
-            if ((this.cells[i].notInCurrentMonth) || (this.cells[i].isBeforeToday)) {
+            if ((this.cells[i].notInCurrentMonth) || (this.cells[i].isBeforeToday) || (this.cells[i].isFeriado)) {
                 disabledClass = 'grid__cell--disable'
             }
             templateCell += `
@@ -117,11 +142,35 @@ class Calendar {
         return this.selectedDate;
     }
 
+    generateFeriados = async() => {
+        const arrayFeriados = []
+        const resp = await fetch('../js/feriados.json')
+            const feriados = await resp.json()
+            feriados.forEach((feriado) => {
+                arrayFeriados.push(feriado)
+            })
+        return arrayFeriados
+    }
+
+    esFeriado(fecha) {
+        let isFeriado = false
+        const feriados = this.generateFeriados()
+        for (let i = 0; i<feriados.length; i++) {
+            if (dayjs(fecha) == dayjs(feriados[i].fecha, "DD-MMM")) {
+                console.log("fechaCells: " + dayjs(fecha))
+                console.log("fechaFeriados: " + dayjs(feriados[i].fecha, "DD-MMM"))
+                isFeriado = true;
+            }
+        }
+        return isFeriado
+    }
+
     // TO FIX: Inmutabilidad de dayjs vs momentjs
     generateDates(monthToShow = dayjs()) {
         if (!dayjs.isDayjs(monthToShow)) {
             return null;
         }
+
         let today = dayjs()
         let dateStart = dayjs(monthToShow).startOf('month');
         let dateEnd = dayjs(monthToShow).endOf('month');
@@ -139,11 +188,12 @@ class Calendar {
             cells.push({
                 date: dayjs(dateStart),
                 notInCurrentMonth: dateStart.month() !== monthToShow.month(),
-                isBeforeToday: dateStart <= today
+                isBeforeToday: dateStart <= today,
+                isFeriado: this.esFeriado(dateStart)
             })
             dateStart = dateStart.add(1, 'days');
         } while (!dateStart.isAfter(dateEnd));
-
+        console.log(cells)
         return cells;
     }
 
@@ -182,6 +232,7 @@ class Turno {
 }
 
 //TODO: MOSTRAR INFO TURNO POR PANTALLA. FIX BOTON SUBMIT. AGREGAR HORA DE TURNO
+
 
 mostrarMenuSeleccionEspecialidad();
 let nuevoTurno = new Turno()
