@@ -63,29 +63,25 @@ class Calendar {
                 </div>
             </div>
             <div class="time__picker"> 
-                <select name="" id="" class="time__picker--select"> 
-                    <option value="01"> 01 </option>
-                    <option value="01"> 02 </option>
-                    <option value="01"> 03 </option>
-                    <option value="01"> 04 </option>
-                    <option value="01"> 05 </option>
-                    <option value="01"> 06 </option>
-                    <option value="01"> 07 </option>
-                    <option value="01"> 08 </option>
-                    <option value="01"> 09 </option>
-                    <option value="01"> 10 </option>
-                    <option value="01"> 11 </option>
-                    <option value="01"> 12 </option>
+                <select name="" id="hours" class="time-picker hour"> 
+                    <option value="09"> 09 </option>
+                    <option value="10"> 10 </option>
+                    <option value="11"> 11 </option>
+                    <option value="12"> 12 </option>
+                    <option value="13"> 13 </option>
+                    <option value="14"> 14 </option>
+                    <option value="15"> 15 </option>
+                    <option value="16"> 16 </option>
+                    <option value="17"> 17 </option>
+                    <option value="18"> 18 </option>
+                    <option value="19"> 19 </option>
+                    <option value="20"> 20 </option>
                 </select>            
                 :
-                <select name="" id="" class="time__picker--select"> 
-                    <option value="01"> 00 </option>
-                    <option value="02"> 30 </option>
-                </select>
-                <select name="" id="" class="time__picker--select"> 
-                    <option value="am"> AM </option>
-                    <option value="pm"> PM </option>
-                </select>   
+                <select name="" id="minutes" class="time-picker minutes"> 
+                    <option value="00"> 00 </option>
+                    <option value="30"> 30 </option>
+                </select>  
             </div>
         `;
         return template;
@@ -142,28 +138,6 @@ class Calendar {
         return this.selectedDate;
     }
 
-    generateFeriados = async() => {
-        const arrayFeriados = []
-        const resp = await fetch('../js/feriados.json')
-            const feriados = await resp.json()
-            feriados.forEach((feriado) => {
-                arrayFeriados.push(feriado)
-            })
-        return arrayFeriados
-    }
-
-    esFeriado(fecha) {
-        let isFeriado = false
-        const feriados = this.generateFeriados()
-        for (let i = 0; i<feriados.length; i++) {
-            if (dayjs(fecha) == dayjs(feriados[i].fecha, "DD-MMM")) {
-                console.log("fechaCells: " + dayjs(fecha))
-                console.log("fechaFeriados: " + dayjs(feriados[i].fecha, "DD-MMM"))
-                isFeriado = true;
-            }
-        }
-        return isFeriado
-    }
 
     // TO FIX: Inmutabilidad de dayjs vs momentjs
     generateDates(monthToShow = dayjs()) {
@@ -189,11 +163,9 @@ class Calendar {
                 date: dayjs(dateStart),
                 notInCurrentMonth: dateStart.month() !== monthToShow.month(),
                 isBeforeToday: dateStart <= today,
-                isFeriado: this.esFeriado(dateStart)
             })
             dateStart = dateStart.add(1, 'days');
         } while (!dateStart.isAfter(dateEnd));
-        console.log(cells)
         return cells;
     }
 
@@ -205,7 +177,7 @@ class Turno {
         this.telefonoCliente = telefono
         this.emailCliente = email
         this.especialidad = especialidad;
-        this.fecha = fecha;
+        this.fecha = dayjs()
 
     }
 
@@ -226,17 +198,23 @@ class Turno {
     }
 
     setFecha(fecha) {
-        this.fecha = fecha;
+        this.fecha = dayjs(fecha);
+    }
+
+    setHora(hora) {
+        this.fecha = dayjs(this.fecha).hour(hora)
+    }
+
+    setMinutos(minutos) {
+        this.fecha = dayjs(this.fecha).minute(minutos)
     }
 
 }
 
 //TODO: MOSTRAR INFO TURNO POR PANTALLA. FIX BOTON SUBMIT. AGREGAR HORA DE TURNO
 
-
-mostrarMenuSeleccionEspecialidad();
 let nuevoTurno = new Turno()
-
+mostrarMenuSeleccionEspecialidad();
 
 function addEventListenerToSpec() {
     let elSpecs = document.querySelectorAll(".seleccion_especialidad");
@@ -381,8 +359,24 @@ function submitTurno() {
     
         const enJSON = JSON.stringify(nuevoTurno)
         sessionStorage.setItem("nuevoTurno", enJSON)
-        console.log(enJSON)
+        showSuccessMessage()
     }
+}
+
+function showSuccessMessage() {
+    Swal.fire(
+        {
+            title: 'Felicitaciones',
+            html: '<h3> Su turno ha sido reservado con éxito </h3>' + 
+            '<h4><b>Especialidad: </b>' + nuevoTurno.especialidad + '</h4>' +
+            '<h4><b>Fecha: </b>' + nuevoTurno.fecha.format('DD-MM-YY') + '</h4>' + 
+            '<h4><b>Hora: </b>' + nuevoTurno.fecha.format('HH:mm') + '</h4>',
+            icon: 'success',
+            iconColor: '#169B12',
+            background: '#9fc771',
+            color: '#000000'           
+        }
+    )
 }
 
 function addEventListenerBotonAnterior(page) {
@@ -428,11 +422,14 @@ function mostrarMenuCalendario() {
 
     let calendario = new Calendar('calendar');
     calendario.getElement().addEventListener('change', e => {
-        nuevoTurno?.setFecha(calendario.value().format('DD-MMM-YY'))
+        nuevoTurno.setFecha(calendario.value())
+        nuevoTurno.setHora(document.getElementById('hours').value)
+        nuevoTurno.setMinutos(document.getElementById('minutes').value)
     });
 
     mostrarBotonesSig(idMenu)
 }
+
 
 function mostrarFormTurnos() {
     let idMenu = 2;
