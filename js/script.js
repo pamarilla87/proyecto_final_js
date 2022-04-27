@@ -87,8 +87,8 @@ class Calendar {
         return template;
     }
 
-    showCells() {
-        this.cells = this.generateDates(this.currentMonth)
+    showCells = async()  => {
+        this.cells = await this.generateDates(this.currentMonth)
         if (this.cells === null) {
             console.error('Error generando date')
             return;
@@ -138,9 +138,18 @@ class Calendar {
         return this.selectedDate;
     }
 
+    populateFeriados = async(fecha) => {    
+        // let isFeriado = false
+        let feriados = await generateFeriados()
+        for (let i = 0; i<feriados.length; i++) {
+            if (fecha.format('DD-MMM') == dayjs(feriados[i].fecha).format('DD-MMM')) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-    // TO FIX: Inmutabilidad de dayjs vs momentjs
-    generateDates(monthToShow = dayjs()) {
+    generateDates = async(monthToShow = dayjs()) => {
         if (!dayjs.isDayjs(monthToShow)) {
             return null;
         }
@@ -163,6 +172,7 @@ class Calendar {
                 date: dayjs(dateStart),
                 notInCurrentMonth: dateStart.month() !== monthToShow.month(),
                 isBeforeToday: dateStart <= today,
+                isFeriado: await this.populateFeriados(dateStart)
             })
             dateStart = dateStart.add(1, 'days');
         } while (!dateStart.isAfter(dateEnd));
@@ -211,10 +221,19 @@ class Turno {
 
 }
 
-//TODO: MOSTRAR INFO TURNO POR PANTALLA. FIX BOTON SUBMIT. AGREGAR HORA DE TURNO
 
 let nuevoTurno = new Turno()
 mostrarMenuSeleccionEspecialidad();
+
+async function generateFeriados(){
+    const arrayFeriados = []
+    const resp = await fetch('../js/feriados.json')
+        const feriados = await resp.json()
+        feriados.forEach((feriado) => {
+            arrayFeriados.push(feriado)
+        })
+    return arrayFeriados
+}
 
 function addEventListenerToSpec() {
     let elSpecs = document.querySelectorAll(".seleccion_especialidad");
@@ -284,7 +303,6 @@ function mostrarBotonesSig(id) {
         botonAnterior.classList.remove("menu__boton--disabled")
         deleteElementById("menu__boton--sig")
         addSubmitButton(rowBotones);
-        // botonSiguiente.classList.add("menu__boton--disabled")
     }
     addEventListenerBotonSiguiente(id);
     addEventListenerBotonAnterior(id);
@@ -306,8 +324,6 @@ function addSubmitButton(rowBotones) {
     divBotonSubmit.append(botonSubmit)
     rowBotones.append(divBotonSubmit)
     contenedorMenuTurnos.append(rowBotones)
-    //TO FIX: Buscar mejor forma de hacer esto
-    // botonSubmit.form = "form_customerInfo"
     document.getElementById("buttonTurnos_Sig").setAttribute('form', 'form_customerInfo')
 
     addEventListenerBotonSiguiente(idMenu);
@@ -325,7 +341,6 @@ function addEventListenerBotonSiguiente(page) {
                     deleteElementById('menu__especialidad')
                     deleteElementById('menu__botones--id')
                     mostrarMenuCalendario();
-                    // console.log("Pasar a la segunda página")
                 }
             }
             if (page == 1) {
@@ -336,11 +351,9 @@ function addEventListenerBotonSiguiente(page) {
                     deleteElementById('menu__opcion--calendario')
                     deleteElementById('menu__botones--id')
                     mostrarFormTurnos()
-                    // console.log("Pasar a la tercera página")
                 }
             }
             if (page == 2) {
-                // console.log("submit info")
                 submitTurno()
             }
 

@@ -177,22 +177,28 @@ footer {
 	cursor: not-allowed;
 }
 //TIME PICKER
+
 .time__picker {
-	padding-top: 10px;
+	display:flex;
+	padding-top: 2%;
+	justify-content: center;
+}
+.time-picker {
 	font-weight: bold;
 	text-align: center;
+	align-items: center;
 	display: inline-block;
 	background:#9fc771;
 	border-radius: 10%;
 }
 
-.time__picker--select {
+.time-picker {
 	font-weight: bold;;
 	background-color:#9fc771;
 	padding: 5px;
 }
 
-.time__picker--select > option {
+.time-picker > option {
 	text-align: center;
 }
 
